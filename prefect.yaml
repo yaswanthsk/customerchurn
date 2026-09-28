@@ -1,0 +1,49 @@
+---
+# Welcome to your prefect.yaml file! You can use this file for
+# storing and managing configuration for deploying your flows.
+# We recommend committing this file to source control along
+# with your flow code.
+
+# Generic metadata about this project
+name: churnops
+prefect-version: 3.8.7
+
+# build section allows you to manage and build docker images
+build: null
+
+# push section allows you to manage if and how this project
+# is uploaded to remote locations
+push: null
+
+# pull section allows you to provide instructions for cloning
+# this project in remote locations
+# pull section allows you to provide instructions for cloning
+# this project in remote locations
+pull:
+- prefect.deployments.steps.git_clone:
+    repository: https://github.com/yaswanthsk/customerchurn.git
+    branch: main
+- prefect.deployments.steps.pip_install_requirements:
+    directory: '{{ pull-git-clone.directory }}'
+    requirements_file: requirements.txt
+
+
+
+# the deployments section allows you to provide configuration
+# for deploying flows
+deployments:
+- name: churn-run
+  version: null
+  tags: []
+  concurrency_limit: null
+  description: null
+  entrypoint: app.py:churn_pipeline
+  parameters: {}
+  work_pool:
+    name: default-agent-pool
+    work_queue_name: null
+    job_variables: {}
+  schedules:
+  - cron: '*/2 * * * *'
+    timezone: null
+    day_or: true
