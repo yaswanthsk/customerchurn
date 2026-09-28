@@ -23,7 +23,7 @@ pull:
     repository: https://github.com/yaswanthsk/customerchurn.git
     branch: main
 - prefect.deployments.steps.pip_install_requirements:
-    directory: '{{ clone-step.directory }}'
+    directory: '{{ pull-git-clone.directory }}'
     requirements_file: '{{ pull-git-clone.directory }}/requirements.txt'
 
 # the deployments section allows you to provide configuration
