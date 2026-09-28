@@ -19,12 +19,11 @@ push: null
 # this project in remote locations
 pull:
 - prefect.deployments.steps.git_clone:
-    id: clone-step
     repository: https://github.com/yaswanthsk/customerchurn.git
     branch: main
-- prefect.deployments.steps.pip_install_requirements:
-    directory: '{{ pull-git-clone.directory }}'
-    requirements_file: '{{ pull-git-clone.directory }}/requirements.txt'
+- prefect.deployments.steps.run_shell_script:
+    script: pip install -r requirements.txt
+    directory: customerchurn
 
 # the deployments section allows you to provide configuration
 # for deploying flows
